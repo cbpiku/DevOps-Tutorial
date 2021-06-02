@@ -10,20 +10,21 @@ pipeline {
   }
   //To execute below stages please set to true by default it will be in false.
   parameters {
-  booleanParam(
-  defaultValue: true,
-  description: '',
-  name: 'checkout')
+      
+    booleanParam(
+    defaultValue: true,
+    description: '',
+    name: 'checkout')
 
-  booleanParam(
-  defaultValue: true,
-  description: '',
-  name: 'build')
+    booleanParam(
+    defaultValue: true,
+    description: '',
+    name: 'build')
 
-  booleanParam(
-  defaultValue: true,
-  description: '',
-  name: 'deploy')
+    booleanParam(
+    defaultValue: true,
+    description: '',
+    name: 'deploy')
   }
 stages {
   stage('CheckOut') {
@@ -31,6 +32,19 @@ stages {
   steps {
 	script {
 		echo 'Source Code Checkout'
+		sh '''
+		set -x
+		if [ ! -d "DevopsBasics" ]
+        then
+            git clone https://github.com/cbpiku/DevopsBasics.git -b master
+        else
+            pushd DevopsBasics
+            git log -n 2
+            git checkout master
+            git pull origin master
+        fi
+
+		'''
 			}
 		}
 	}
@@ -39,6 +53,12 @@ stages {
   steps {
 	script {
 		echo 'Build and Testing.....'
+		sh '''
+		set -x
+		pushd DevopsBasics
+		    mvn test install
+		popd
+		'''
 			}
 		}
 	}
