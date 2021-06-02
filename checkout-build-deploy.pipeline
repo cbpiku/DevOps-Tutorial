@@ -1,0 +1,54 @@
+#!groovy
+slave_node = 'Slave-1'
+cus_ws = '/home/ec2-user/workspace/Build-Deploy-Job/'
+pipeline {
+ agent {
+ 		node {
+		label """${slave_node}""" 
+		customWorkspace """${cus_ws}"""
+		}
+  }
+  //To execute below stages please set to true by default it will be in false.
+  parameters {
+  booleanParam(
+  defaultValue: true,
+  description: '',
+  name: 'checkout')
+
+  booleanParam(
+  defaultValue: true,
+  description: '',
+  name: 'build')
+
+  booleanParam(
+  defaultValue: true,
+  description: '',
+  name: 'deploy')
+  }
+stages {
+  stage('CheckOut') {
+  when {expression { return params.checkout} }
+  steps {
+	script {
+		echo 'Source Code Checkout'
+			}
+		}
+	}
+  stage('Build and Test') {
+  when {expression { return params.build} }
+  steps {
+	script {
+		echo 'Build and Testing.....'
+			}
+		}
+	}
+  stage('Deploy') {
+  when {expression { return params.deploy} }
+  steps {
+	script {
+		echo 'Deploy to Artifactory Server !!'
+			}
+		}
+	}
+}
+}
