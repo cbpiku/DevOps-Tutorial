@@ -1,0 +1,25 @@
+pipeline {
+  agent any
+  stages {
+    stage ("checkout") {
+      steps {
+        echo "Source Code Checkout from GitHUB"
+      }
+    }
+    stage ("Build"){
+     steps {
+        echo "Build Source Code Feature_02"
+     }
+    }
+    stage ("Test"){
+     steps{
+       echo "Test Need to Perform 660B/780B and 920B Hardware"
+      }
+    }
+    stage ("Deploy"){
+     steps {
+      echo "Deploy : Test Report to JFROG Artifactory"
+     }
+    }
+  }
+}
