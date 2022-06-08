@@ -3,22 +3,22 @@ pipeline {
   stages {
     stage ("checkout") {
       steps {
-        echo "Source Code Checkout"
+        echo "Source Code Checkout from GitHUB"
       }
     }
     stage ("Build"){
      steps {
-	echo "Build"
+	echo "Build Source Code"
      }
     }
     stage ("Test"){
      steps{
-       echo "Testing"
+       echo "Test Need to Perform 660B/780B and 920B Hardware"
       }
     }
     stage ("Deploy"){
      steps {
-      echo "Deploy"
+      echo "Deploy : Test Report to JFROG Artifactory"
      }
     }
   }
